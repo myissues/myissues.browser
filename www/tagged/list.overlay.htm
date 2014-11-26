@@ -1,0 +1,64 @@
+
+{{? at.headerScripts }}
+
+<style>
+	TABLE TR[issueUrl]:hover,
+	TABLE TR[issueUrl]:hover TD {
+		cursor: pointer;
+		background-color: #E5E5E5;
+	}
+</style>
+
+{{?? at.bodyAttributes }}
+
+{{?? at.body }}
+
+<div class="content">
+
+	{{ if (at.view.issues.order.length > 0) { }}
+
+	<table class="table table-bordered table-condensed table-striped">
+		<tbody>
+			<tr>
+				<th>Project</th>
+				<th>Number</th>
+				<th>Title</th>
+				<th class="text-center">Assigned</th>
+				<th class="text-center">Updated</th>
+			</tr>
+			{{~at.view.issues.order :tagValue:index}}
+				<tr>
+				    <td colspan="5"><h3>{{=tagValue}}</h3></td>
+				</tr>
+				{{ for(var issueId in at.view.issues.values[tagValue]) { }}
+					<tr issueUrl="{{=at.view.issues.values[tagValue][issueId].externalUrl}}">
+					    <td>{{=at.view.issues.values[tagValue][issueId].$display.project}}</td>
+					    <td>{{=at.view.issues.values[tagValue][issueId].number}}</td>
+					    <td>{{=at.view.issues.values[tagValue][issueId].title}}</td>
+					    <td>{{=at.view.issues.values[tagValue][issueId].$display.assignedTo}}</td>
+					    <td>{{=at.view.issues.values[tagValue][issueId].$display.updatedOn}}</td>
+					</tr>
+				{{ } }}
+			{{~}}
+		</tbody>
+	</table>
+
+	{{ } else { }}
+
+		<p>No issues found!</p>
+
+	{{ } }}
+
+</div>
+
+{{?? at.footerScripts }}
+
+<script>
+$("tr").click(function() {
+	var url = $(this).attr("issueUrl");
+	if (!url) return;
+	window.open(url);
+});
+</script>
+
+{{?}}

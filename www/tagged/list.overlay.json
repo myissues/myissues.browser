@@ -1,0 +1,10 @@
+{
+	"view": {
+		"title": "Tagged Issues"
+	},
+	"$page": {
+		"upstream": {
+			"pathname": "/index.html"
+		}
+	}
+}
